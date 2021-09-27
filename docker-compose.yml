@@ -1,0 +1,30 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.0.26 
+    container_name: Mysql
+    ports:
+      - "8889:3306"
+    volumes:
+      - .db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: dev
+  myadmin:
+    image: phpmyadmin
+    container_name: myadmin
+    ports:
+      - "8081:80"
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+  web:
+    image: nginx:1.21.3
+    container_name: nginx
+    ports:
+      - "8001:80"
+    restart: always
